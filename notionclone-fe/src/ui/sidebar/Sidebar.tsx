@@ -1,7 +1,8 @@
+import { useState } from "react";
 import type { CSSProperties } from "react";
 
 import {
-  SwapHorizOutlined,
+  KeyboardDoubleArrowLeft,
   EditOutlined,
   HelpOutline,
   Inventory2Outlined,
@@ -9,8 +10,11 @@ import {
 
 import { SIDEBAR_SECTIONS } from "../../constants/sidebar";
 import SidebarItemRow from "./SidebarItemRow";
+import HoverIconButton from "./HoverIconButton";
 
 interface SidebarProps {
+  collapsed: boolean;
+  onToggle: () => void;
   activeId?: string;
   onItemClick?: (id: string) => void;
 }
@@ -19,7 +23,7 @@ const sidebarStyles: Record<string, CSSProperties> = {
   wrap: {
     display: "flex",
     flexDirection: "column",
-    width: 260,
+    width: 300,
     minHeight: "100vh",
     padding: "12px 10px 12px 12px",
     background: "var(--gray-100)",
@@ -28,6 +32,9 @@ const sidebarStyles: Record<string, CSSProperties> = {
     fontSize: 14,
     color: "var(--gray-700)",
     boxSizing: "border-box",
+    overflow: "hidden",
+    transition:
+      "width 0.2s ease-out, padding 0.2s ease-out, border-right 0.2s ease-out",
   },
   workspace: {
     display: "flex",
@@ -70,6 +77,26 @@ const sidebarStyles: Record<string, CSSProperties> = {
     fontSize: 13,
     color: "var(--gray-500)",
   },
+
+  toggleButton: {
+    width: 26,
+    height: 26,
+    borderRadius: 6,
+    border: "1px solid var(--gray-300)",
+    background: "var(--gray-100)",
+    color: "var(--gray-600)",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    transition: "background 0.15s ease-out, color 0.15s ease-out",
+  },
+
+  toggleButtonHover: {
+    background: "var(--gray-200)",
+    color: "var(--gray-800)",
+  },
+
   section: { marginTop: 8 },
   sectionLabel: {
     padding: "12px 6px 4px",
@@ -101,50 +128,77 @@ const sidebarStyles: Record<string, CSSProperties> = {
   },
 };
 
-const Sidebar = ({ activeId, onItemClick }: SidebarProps) => {
+const Sidebar = ({
+  collapsed,
+  onToggle,
+  activeId,
+  onItemClick,
+}: SidebarProps) => {
   return (
-    <aside style={sidebarStyles.wrap}>
-      <header style={sidebarStyles.workspace}>
-        <div style={sidebarStyles.avatar}>김</div>
+    <aside
+      style={{
+        ...sidebarStyles.wrap,
+        width: collapsed ? 0 : 300,
+        padding: collapsed ? 0 : "12px 10px 12px 12px",
+        borderRight: collapsed ? "none" : "1px solid var(--gray-300)",
+      }}
+    >
+      {!collapsed && (
+        <>
+          <header style={sidebarStyles.workspace}>
+            <div style={sidebarStyles.avatar}>김</div>
 
-        <div style={sidebarStyles.workspaceMain}>
-          <div style={sidebarStyles.workspaceName}>김희원님의 워크스페이스</div>
-          <div style={sidebarStyles.workspaceSub}>개인 · 무료 플랜</div>
-        </div>
+            <div style={sidebarStyles.workspaceMain}>
+              <div style={sidebarStyles.workspaceName}>
+                김희원님의 워크스페이스
+              </div>
+              <div style={sidebarStyles.workspaceSub}>개인 · 무료 플랜</div>
+            </div>
 
-        <div style={sidebarStyles.workspaceActions}>
-          <SwapHorizOutlined fontSize="small" />
-          <EditOutlined fontSize="small" />
-        </div>
-      </header>
-
-      {SIDEBAR_SECTIONS.map((section) => (
-        <section key={section.id} style={sidebarStyles.section}>
-          {section.label && (
-            <div style={sidebarStyles.sectionLabel}>{section.label}</div>
-          )}
-
-          <ul style={sidebarStyles.itemList}>
-            {section.items.map((item) => (
-              <SidebarItemRow
-                key={item.id}
-                item={item}
-                isActive={activeId === item.id}
-                onClick={onItemClick ? () => onItemClick(item.id) : undefined}
+            <div style={sidebarStyles.workspaceActions}>
+              <HoverIconButton
+                icon={<KeyboardDoubleArrowLeft fontSize="small" />}
+                label="사이드바 닫기"
+                onClick={onToggle}
               />
-            ))}
-          </ul>
-        </section>
-      ))}
+              <HoverIconButton
+                icon={<EditOutlined fontSize="small" />}
+                label="새 페이지 만들기"
+              />
+            </div>
+          </header>
 
-      <div style={sidebarStyles.bottom}>
-        <div style={sidebarStyles.bottomIcon}>
-          <HelpOutline fontSize="small" />
-        </div>
-        <div style={sidebarStyles.bottomIcon}>
-          <Inventory2Outlined fontSize="small" />
-        </div>
-      </div>
+          {SIDEBAR_SECTIONS.map((section) => (
+            <section key={section.id} style={sidebarStyles.section}>
+              {section.label && (
+                <div style={sidebarStyles.sectionLabel}>{section.label}</div>
+              )}
+
+              <ul style={sidebarStyles.itemList}>
+                {section.items.map((item) => (
+                  <SidebarItemRow
+                    key={item.id}
+                    item={item}
+                    isActive={activeId === item.id}
+                    onClick={
+                      onItemClick ? () => onItemClick(item.id) : undefined
+                    }
+                  />
+                ))}
+              </ul>
+            </section>
+          ))}
+
+          <div style={sidebarStyles.bottom}>
+            <div style={sidebarStyles.bottomIcon}>
+              <HelpOutline fontSize="small" />
+            </div>
+            <div style={sidebarStyles.bottomIcon}>
+              <Inventory2Outlined fontSize="small" />
+            </div>
+          </div>
+        </>
+      )}
     </aside>
   );
 };
