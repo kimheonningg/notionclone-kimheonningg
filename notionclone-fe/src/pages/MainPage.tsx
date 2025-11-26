@@ -1,7 +1,10 @@
+import "../styles/colors.css";
+import Sidebar from "../ui/sidebar/Sidebar";
+
 const MainPage = () => {
   return (
     <>
-      <div>Main page</div>
+      <Sidebar />
     </>
   );
 };
