@@ -4,13 +4,14 @@ import "@blocknote/mantine/style.css";
 import type { CSSProperties } from "react";
 import { useEffect, useMemo } from "react";
 
-import { filterSuggestionItems, type PartialBlock } from "@blocknote/core";
+import { filterSuggestionItems } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import {
   getDefaultReactSlashMenuItems,
   SuggestionMenuController,
   useCreateBlockNote,
 } from "@blocknote/react";
+import { DescriptionOutlined } from "@mui/icons-material";
 
 import { FALLBACK_BLOCKS } from "../../constants/predefinedBlocks";
 import type { Page } from "../../types/page";
@@ -55,8 +56,25 @@ const PageEditor = ({
       title: "새 페이지",
       aliases: ["page"],
       group: "Navigation",
+      icon: <DescriptionOutlined fontSize="small" />,
       subtext: "현재 페이지의 하위 페이지를 만듭니다",
       onItemClick: () => {
+        // Find the current block (where the cursor is located)
+        const currentBlock = editor.getTextCursorPosition().block;
+
+        // Before moving to the created page, change current block content and save
+        editor.updateBlock(currentBlock, {
+          type: "paragraph",
+          content: [
+            {
+              type: "text",
+              text: "📄 새 페이지",
+              styles: { bold: true },
+            },
+          ],
+        });
+
+        // Create new page and move
         const newId = onCreateChildPage();
         console.log("created child page", newId);
       },
