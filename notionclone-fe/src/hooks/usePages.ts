@@ -36,7 +36,6 @@ export const usePages = () => {
     options?: { title?: string; icon?: string; initialBlocks?: PartialBlock[] }
   ): string => {
     const id = createId();
-    const now = new Date().toISOString();
 
     const page: Page = {
       id,
@@ -44,8 +43,8 @@ export const usePages = () => {
       title: options?.title ?? "제목 없는 페이지",
       icon: options?.icon,
       blocks: options?.initialBlocks ?? [],
-      createdAt: now,
-      updatedAt: now,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
     setState((prev) => {

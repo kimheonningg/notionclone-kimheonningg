@@ -31,6 +31,7 @@ This project will open at `http://localhost:5173`
 
 - `src/`
   - `constants/`
+  - `hooks/`
   - `pages/`
   - `styles/`
   - `types/`
@@ -42,3 +43,4 @@ This project will open at `http://localhost:5173`
 
 - Sidebar 열기 / 닫기
 - 검색창
+- Page 관리 (via custom hook `usePages`)

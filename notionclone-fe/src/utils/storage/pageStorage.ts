@@ -2,7 +2,7 @@ import type { PageState } from "../../types/page";
 import {
   welcomeId,
   NOTION_WELCOME_CONTENT,
-} from "../../constants/notionWelcome";
+} from "../../constants/initialContent/notionWelcome";
 import { PAGE_STORAGE_KEY } from "../../constants/localStorageKey";
 
 export const loadInitialPageState = (): PageState => {
@@ -18,8 +18,7 @@ export const loadInitialPageState = (): PageState => {
     }
   }
 
-  // Initially one basic page
-  const now = new Date().toISOString();
+  // FIXME: Initially one basic page
 
   return {
     pages: {
@@ -29,8 +28,8 @@ export const loadInitialPageState = (): PageState => {
         title: "Notion에 오신 것을 환영합니다!",
         icon: "👋",
         blocks: NOTION_WELCOME_CONTENT,
-        createdAt: now,
-        updatedAt: now,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       },
     },
     rootIds: [welcomeId],

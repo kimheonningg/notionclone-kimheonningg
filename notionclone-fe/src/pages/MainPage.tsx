@@ -7,7 +7,7 @@ import {
   welcomeId,
   NOTION_WELCOME_TITLE,
   NOTION_WELCOME_CONTENT,
-} from "../constants/notionWelcome";
+} from "../constants/initialContent/notionWelcome";
 
 import Sidebar from "../ui/sidebar/Sidebar";
 import SearchOverlay from "../ui/search/SearchOverlay";
