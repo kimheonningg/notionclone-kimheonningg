@@ -163,7 +163,7 @@ const Sidebar = ({
               />
               <HoverIconButton
                 icon={<EditOutlined fontSize="small" />}
-                label="새 페이지 만들기"
+                label="새 빈 페이지를 만들기"
                 onClick={onCreatePage}
               />
             </div>

@@ -48,3 +48,4 @@ This project will open at `http://localhost:5173`
 - BreadCrumb (현재 hierarchy 상 위치 표시- `BreadCrumb.tsx`, 계산은 `breadCrumbs.ts` 함수가)
 - Page 관리 (via custom hook `usePages.ts`)
 - Page hierarchy 정보를 localStorage에 저장 (`pageStorage.ts` util 함수가 관리)
+- `/page`로 새로운 페이지 생성하고, page 간 hierarchy 확립

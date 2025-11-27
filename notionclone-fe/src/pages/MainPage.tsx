@@ -100,7 +100,7 @@ const MainPage = () => {
             key={activePage.id}
             // Prevent re-rendering using useMemo
             page={initialPageData}
-            onChangeBlocks={(blocks) => {
+            onChangeBlocks={(blocks: any) => {
               updatePageBlocks(activePage.id, blocks);
             }}
             onCreateChildPage={() => {
