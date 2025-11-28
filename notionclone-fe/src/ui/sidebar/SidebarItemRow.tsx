@@ -1,11 +1,17 @@
 import { useState } from "react";
 import type { CSSProperties } from "react";
+import { MoreHoriz, Add } from "@mui/icons-material";
+
 import type { SidebarItem } from "../../types/sidebar";
+import HoverIconButton from "./HoverIconButton";
 
 interface SidebarItemRowProps {
   item: SidebarItem;
   isActive: boolean;
   onClick?: () => void;
+  // "개인 페이지" tab
+  onAddChildPage?: () => void;
+  onOpenDeleteMenu?: () => void;
 }
 
 const rowStyles: Record<string, CSSProperties> = {
@@ -19,7 +25,9 @@ const rowStyles: Record<string, CSSProperties> = {
     cursor: "pointer",
     color: "var(--gray-700)",
     userSelect: "none",
+    minHeight: 28,
     transition: "background 0.1s ease, color 0.1s ease",
+    position: "relative",
   },
   itemHover: {
     background: "var(--gray-200)",
@@ -35,6 +43,7 @@ const rowStyles: Record<string, CSSProperties> = {
     alignItems: "center",
     justifyContent: "center",
     fontSize: 15,
+    flexShrink: 0,
   },
   label: {
     flex: 1,
@@ -50,9 +59,21 @@ const rowStyles: Record<string, CSSProperties> = {
     background: "var(--pink-50)",
     color: "var(--pink-600)",
   },
+  actions: {
+    display: "flex",
+    alignItems: "center",
+    gap: 2,
+    marginLeft: 4,
+  },
 };
 
-const SidebarItemRow = ({ item, isActive, onClick }: SidebarItemRowProps) => {
+const SidebarItemRow = ({
+  item,
+  isActive,
+  onClick,
+  onAddChildPage,
+  onOpenDeleteMenu,
+}: SidebarItemRowProps) => {
   const [hover, setHover] = useState(false);
 
   // activate only if onClick exist
@@ -74,7 +95,42 @@ const SidebarItemRow = ({ item, isActive, onClick }: SidebarItemRowProps) => {
       {item.icon && <span style={rowStyles.icon}>{item.icon}</span>}
       <span style={rowStyles.label}>{item.label}</span>
 
-      {item.badge && <span style={rowStyles.badge}>{item.badge}</span>}
+      {item.badge && !hover && (
+        <span style={rowStyles.badge}>{item.badge}</span>
+      )}
+
+      {hover && (onAddChildPage || onOpenDeleteMenu) && (
+        <div style={rowStyles.actions}>
+          {onOpenDeleteMenu && (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenDeleteMenu();
+              }}
+            >
+              <HoverIconButton
+                icon={<MoreHoriz sx={{ fontSize: 16 }} />}
+                label="삭제, 복제 등..."
+                noBorder={true}
+              />
+            </div>
+          )}
+          {onAddChildPage && (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                onAddChildPage();
+              }}
+            >
+              <HoverIconButton
+                icon={<Add sx={{ fontSize: 16 }} />}
+                label="하위 페이지 추가"
+                noBorder={true}
+              />
+            </div>
+          )}
+        </div>
+      )}
     </li>
   );
 };

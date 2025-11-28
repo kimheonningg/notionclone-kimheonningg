@@ -240,6 +240,9 @@ const Sidebar = ({
                           onClick={
                             onItemClick ? () => onItemClick(page.id) : undefined
                           }
+                          // TODO
+                          onAddChildPage={() => {}}
+                          onOpenDeleteMenu={() => {}}
                         />
                       );
                     })}
