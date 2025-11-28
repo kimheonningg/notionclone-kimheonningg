@@ -40,20 +40,6 @@ const mainPageStyles: Record<string, CSSProperties> = {
     margin: "0 auto",
     paddingBottom: 80,
   },
-  placeholder: {
-    padding: "80px 80px",
-    color: "var(--gray-500)",
-  },
-  placeholderTitle: {
-    margin: "0 0 8px",
-    fontSize: 24,
-    fontWeight: 600,
-    color: "var(--gray-800)",
-  },
-  placeholderText: {
-    margin: 0,
-    fontSize: 14,
-  },
 };
 
 const MainPage = () => {
@@ -71,11 +57,12 @@ const MainPage = () => {
   } = usePages();
 
   const handleSidebarItemClick = (id: string) => {
-    setActivePage(id);
-
     if (id === "search") {
       setSearchOpen(true);
+      return;
     }
+
+    setActivePage(id);
   };
 
   const renderMainContent = (): ReactNode => {
