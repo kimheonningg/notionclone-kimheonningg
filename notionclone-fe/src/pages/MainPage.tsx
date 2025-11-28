@@ -5,6 +5,7 @@ import { KeyboardDoubleArrowRight } from "@mui/icons-material";
 
 import Sidebar from "../ui/sidebar/Sidebar";
 import SearchOverlay from "../ui/search/SearchOverlay";
+import TrashCanOverlay from "../ui/trashcan/TrashCanOverlay";
 import PageHeader from "../ui/editor/PageHeader";
 import PageEditor from "../ui/editor/PageEditor";
 
@@ -44,7 +45,10 @@ const mainPageStyles: Record<string, CSSProperties> = {
 
 const MainPage = () => {
   const [collapsed, setCollapsed] = useState(false);
+
+  // Overlay open states
   const [searchOpen, setSearchOpen] = useState(false);
+  const [trashOpen, setTrashOpen] = useState(false);
 
   const {
     pages,
@@ -57,8 +61,15 @@ const MainPage = () => {
   } = usePages();
 
   const handleSidebarItemClick = (id: string) => {
+    // Search overlay
     if (id === "search") {
       setSearchOpen(true);
+      return;
+    }
+
+    // Trash overlay
+    if (id === "trash") {
+      setTrashOpen(true);
       return;
     }
 
@@ -128,8 +139,9 @@ const MainPage = () => {
         <div style={mainPageStyles.contentInner}>{renderMainContent()}</div>
       </div>
 
-      {/* SearchOverlay */}
+      {/* Overlays */}
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <TrashCanOverlay open={trashOpen} onClose={() => setTrashOpen(false)} />
     </div>
   );
 };

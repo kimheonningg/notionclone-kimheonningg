@@ -48,4 +48,6 @@ This project will open at `http://localhost:5173`
 - BreadCrumb (현재 hierarchy 상 위치 표시- `BreadCrumb.tsx`, 계산은 `breadCrumbs.ts` 함수가)
 - Page 관리 (via custom hook `usePages.ts`)
 - Page hierarchy 정보를 localStorage에 저장 (`pageStorage.ts` util 함수가 관리)
+- Sidebar에서도 page 생성 가능 (Sidebar의 root page 목록은 동적으로 렌더링된다)
 - `/page`로 새로운 페이지 생성하고, page 간 hierarchy 확립
+- 휴지통 (기능 없이 UI만 구현- `TrashCanOverlay.tsx`)
