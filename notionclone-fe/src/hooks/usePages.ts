@@ -59,6 +59,7 @@ export const usePages = () => {
     return id;
   };
 
+  // FIXME: updatePage function is a bit too general
   const updatePage = (id: string, updates: Partial<Page>) => {
     setState((prev) => {
       const target = prev.pages[id];
@@ -101,20 +102,6 @@ export const usePages = () => {
     });
   };
 
-  const renamePage = (id: string, title: string) => {
-    setState((prev) => {
-      const target = prev.pages[id];
-      if (!target) return prev;
-      return {
-        ...prev,
-        pages: {
-          ...prev.pages,
-          [id]: { ...target, title, updatedAt: new Date().toISOString() },
-        },
-      };
-    });
-  };
-
   const getChildren = (parentId: string | null): Page[] => {
     return Object.values(state.pages)
       .filter((page) => page.parentId === parentId)
@@ -133,7 +120,6 @@ export const usePages = () => {
     createPage,
     updatePage,
     updatePageBlocks,
-    renamePage,
     getChildren,
   };
 };
